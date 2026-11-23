@@ -625,7 +625,7 @@ input,button{accent-color:var(--green-accent)}
 <button class="rvi go" id="go" style="--i:5" type="submit">إرسال الدعاء</button>
 </form>
 <div class="thanks" id="thanks" hidden><h3 id="tt"></h3><p id="tp"></p><button type="button" class="again" id="again">كتابة دعاء آخر</button></div>
-<div class="wall" id="wall" hidden><svg class="orn" viewBox="0 0 400 30" aria-hidden="true"><path d="M20 15 H170 M230 15 H380 M200 3 L212 15 L200 27 L188 15Z" fill="none" stroke="#916554" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>دعواتكم</h3><div class="wl" id="wl"></div></div>
+<div class="wall" id="wall" hidden style="display:none!important"><svg class="orn" viewBox="0 0 400 30" aria-hidden="true"><path d="M20 15 H170 M230 15 H380 M200 3 L212 15 L200 27 L188 15Z" fill="none" stroke="#916554" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>دعواتكم</h3><div class="wl" id="wl"></div></div>
 </section>
 <div class="cal end" id="endsec"><svg viewBox="0 0 1080 1150" xmlns="http://www.w3.org/2000/svg"><defs><filter id="n4"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .09 0"/></filter></defs><rect width="1080" height="1150" fill="#ecdad2"/>
 <text class="ct" x="540" y="200" style="--d:.3s;--t:1.6s;font-size:72px;font-family:'Amiri',serif;font-weight:700">حضوركم يسعدنا</text>
@@ -659,8 +659,8 @@ var cals=document.querySelectorAll('.cal,.rv');if('IntersectionObserver' in wind
 document.getElementById('intro').addEventListener('click',function(){var i=this;if(i.classList.contains('done'))return;i.classList.add('open');setTimeout(function(){i.classList.add('lift')},6000);setTimeout(function(){document.getElementById('card').classList.remove('paused');i.classList.add('done');sched()},10800);});
 
 (function(){
-var WA='';  // رقم واتساب (بدون +) إذا ما في Firebase
-var FIREBASE={apiKey:'AIzaSyBxzEKOQ8NrNqgeJp1XePLEsbEKXdXHla4',projectId:'my-wedding-cards',collection:'wishes_hamed_suad'};
+var WA='971527646113';  // رقم واتساب لاستقبال الأدعية (بدون +)
+var FIREBASE={apiKey:'',projectId:'',collection:''};
 var FB=!!(FIREBASE.apiKey&&FIREBASE.projectId);
 var f=document.getElementById('rsvp'),err=document.getElementById('err'),th=document.getElementById('thanks'),btn=document.getElementById('go'),again=document.getElementById('again');
 function url(){return 'https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(FIREBASE.projectId)+'/databases/(default)/documents/'+encodeURIComponent(FIREBASE.collection)+'?key='+encodeURIComponent(FIREBASE.apiKey)}
@@ -670,7 +670,7 @@ function load(){if(!FB)return;
  fetch('https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(FIREBASE.projectId)+'/databases/(default)/documents:runQuery?key='+encodeURIComponent(FIREBASE.apiKey),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({structuredQuery:{from:[{collectionId:FIREBASE.collection}],orderBy:[{field:{fieldPath:'createdAt'},direction:'DESCENDING'}],limit:200}})})
  .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(rows){wl.textContent='';(rows||[]).forEach(function(x){var fl=x.document&&x.document.fields;if(fl&&fl.message)card(fl.name&&fl.name.stringValue,fl.message.stringValue)})}).catch(function(){})}
 load();
-function done(name){document.getElementById('tt').textContent='آمين، جزاكم الله خيراً'+(name?' يا '+name:'');document.getElementById('tp').textContent='وصلت دعوتكم لحامد وسعاد';f.style.display='none';th.hidden=false;th.scrollIntoView({behavior:'smooth',block:'center'})}
+function done(name){document.getElementById('tt').textContent='جزاكم الله خيراً'+(name?' يا '+name:'');document.getElementById('tp').textContent='انفتح واتساب برسالتكم، اكبسوا إرسال لتوصل دعوتكم';f.style.display='none';th.hidden=false;th.scrollIntoView({behavior:'smooth',block:'center'})}
 f.addEventListener('input',function(){err.textContent=''});
 f.addEventListener('submit',function(e){
  e.preventDefault();
@@ -682,7 +682,7 @@ f.addEventListener('submit',function(e){
   .then(function(r){if(!r.ok)throw new Error(r.status);btn.disabled=false;card(name,msg,true);done(name)})
   .catch(function(){btn.disabled=false;err.textContent='عذراً، ما قدرنا نرسل الدعاء. جرّبوا مرة ثانية.'});
   return}
- var txt=(name?name+':\n':'')+msg;
+ var txt='دعاء لحامد وسعاد 🤍\n\n'+msg+(name?'\n\n— '+name:'');
  if(WA){window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(txt),'_blank','noopener');done(name);return}
  if(navigator.share){navigator.share({text:txt}).then(function(){done(name)}).catch(function(){});return}
  card(name,msg,true);done(name);
