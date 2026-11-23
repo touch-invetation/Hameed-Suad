@@ -655,7 +655,7 @@ document.getElementById('intro').addEventListener('click',function(){var i=this;
 
 (function(){
 var WA='';  // رقم واتساب (بدون +) إذا ما في Firebase
-var FIREBASE={apiKey:'AIzaSyBxzEKOQ8NrNqgeJp1XePLEsbEKXdXHla4',projectId:'my-wedding-cards',collection:'duaa_hamed_suad'};
+var FIREBASE={apiKey:'AIzaSyBxzEKOQ8NrNqgeJp1XePLEsbEKXdXHla4',projectId:'my-wedding-cards',collection:'wishes_hamed_suad'};
 var FB=!!(FIREBASE.apiKey&&FIREBASE.projectId);
 var f=document.getElementById('rsvp'),err=document.getElementById('err'),th=document.getElementById('thanks'),btn=document.getElementById('go'),again=document.getElementById('again');
 function url(){return 'https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(FIREBASE.projectId)+'/databases/(default)/documents/'+encodeURIComponent(FIREBASE.collection)+'?key='+encodeURIComponent(FIREBASE.apiKey)}
